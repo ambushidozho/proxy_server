@@ -1,1 +1,13 @@
-node_modules
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+.idea/
+.DS_Store
+main
+*.crt
+*.key
+params
