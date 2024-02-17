@@ -39,12 +39,12 @@ func StringToHeader(headers string) map[string]string {
 
 func GenerateTLSConfig(host, URL string) (tls.Config, error) {
 	path, _ := filepath.Abs("")
-	err := exec.Command(path+"/certs/gen_cert.sh", host, strconv.Itoa(rand.Int())).Run()
+	err := exec.Command(path + "/certs/gen_cert.sh", host, strconv.Itoa(rand.Int())).Run()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	tlsCert, err := tls.LoadX509KeyPair(path+"/certs/nck.crt", path+"/certs/cert.key")
+	tlsCert, err := tls.LoadX509KeyPair(path + "/certs/cert.crt", path + "/certs/cert.key")
 	if err != nil {
 		return tls.Config{}, err
 	}

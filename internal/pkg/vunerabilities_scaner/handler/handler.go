@@ -70,8 +70,8 @@ func (h *Handler) Scan(w http.ResponseWriter, r *http.Request) {
 	}
 	status := h.usecase.Scan(id)
 	if status == models.VunerabilityFound {
-		middleware.Response(w, models.NotFound, `Vunerability found \n`)
+		middleware.Response(w, models.VunerabilityFound, "Vunerability found")
 		return
 	}
-	middleware.Response(w, status, `Vunerability not found \n`)
+	middleware.Response(w, status, "Vunerability not found")
 }
