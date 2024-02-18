@@ -1,12 +1,13 @@
 package delivery
 
 import (
-	"github.com/gorilla/mux"
 	"net/http"
 	"proxy/internal/models"
 	"proxy/internal/pkg/vunerabilities_scaner"
 	"proxy/internal/pkg/vunerabilities_scaner/middleware"
 	"strconv"
+
+	"github.com/gorilla/mux"
 )
 
 type Handler struct {
@@ -21,7 +22,6 @@ func (h *Handler) AllRequests(w http.ResponseWriter, r *http.Request) {
 	requests, status := h.usecase.GetAllRequests()
 	middleware.Response(w, status, requests)
 }
-
 func (h *Handler) GetRequest(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	ids, found := vars["id"]
@@ -52,8 +52,8 @@ func (h *Handler) RepeatRequest(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	requests, status := h.usecase.RepeatRequest(id)
-	middleware.Response(w, status, requests)
+	response, status := h.usecase.RepeatRequest(id)
+	middleware.Response(w, status, response)
 }
 
 func (h *Handler) Scan(w http.ResponseWriter, r *http.Request) {

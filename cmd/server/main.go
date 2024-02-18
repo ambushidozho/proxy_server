@@ -51,7 +51,7 @@ func main() {
 	}
 
 	newRepo := proxyRepo.NewRepoPostgres(db)
-	proxyServer := proxyHandler.NewProxyServer(newRepo, ":"+config.Proxy.Port)
+	proxyServer := proxyHandler.NewProxyServer(newRepo, ":" + config.Proxy.Port)
 	go func() {
 		log.Fatal(proxyServer.ListenAndServe())
 	}()
@@ -70,5 +70,5 @@ func main() {
 	}
 
 	http.Handle("/", muxRoute)
-	log.Print(http.ListenAndServe(":"+config.Web.Port, muxRoute))
+	log.Print(http.ListenAndServe(":" + config.Web.Port, muxRoute))
 }

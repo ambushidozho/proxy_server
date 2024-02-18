@@ -3,8 +3,10 @@ package middleware
 import (
 	"encoding/json"
 	"errors"
-	"proxy/internal/models"
 	"net/http"
+	"proxy/internal/models"
+	"strconv"
+	"strings"
 )
 
 var (
@@ -55,20 +57,20 @@ func Response(w http.ResponseWriter, status models.StatusCode, body interface{})
 	}
 
 	if body != nil {
-		if bodyBytes, ok := body.([]byte); ok {
-			_, err := w.Write(bodyBytes)
-			if err != nil {
-				return
-			}
-			_, _ = w.Write(body.([]byte))
-		} else {
-			jsn, err := json.Marshal(body)
-			if err != nil {
-				return
-			}
-			_, _ = w.Write(jsn)
+		jsn, err := json.Marshal(body)
+		if err != nil {
+			return
 		}
-		
-		
+		escapedjsn, _ := unescapeUnicodeCharactersInJSON(jsn)
+		w.Write(escapedjsn)
 	}
+}
+
+
+func unescapeUnicodeCharactersInJSON(_jsonRaw json.RawMessage) (json.RawMessage, error) {
+    str, err := strconv.Unquote(strings.Replace(strconv.Quote(string(_jsonRaw)), `\\u`, `\u`, -1))
+    if err != nil {
+        return nil, err
+    }
+    return []byte(str), nil
 }

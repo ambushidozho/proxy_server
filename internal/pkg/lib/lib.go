@@ -90,3 +90,11 @@ func CookiesToString(masC []*http.Cookie) (string, error) {
 	}
 	return string(b[:]), nil
 }
+
+func unescapeUnicodeCharactersInJSON(_jsonRaw json.RawMessage) (json.RawMessage, error) {
+    str, err := strconv.Unquote(strings.Replace(strconv.Quote(string(_jsonRaw)), `\\u`, `\u`, -1))
+    if err != nil {
+        return nil, err
+    }
+    return []byte(str), nil
+}

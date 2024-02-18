@@ -11,7 +11,6 @@ const (
 	SelectAllFromRequest = "SELECT id, method, scheme, host, path, cookies, header, body FROM request;"
 	SelectOneFromRequest = "SELECT id, method, scheme, host, path, cookies, header, body FROM request WHERE id = $1;"
 )
-
 type repoPostgres struct {
 	Conn *pgx.ConnPool
 }

@@ -43,6 +43,7 @@ func (uc *UseCase) RepeatRequest(id int) (models.Response, models.StatusCode) {
 	for key, value := range request.Header {
 		req.Header.Add(key, value)
 	}
+
 	resp := uc.hProxy.Proxy(req)
 
 	return resp, models.Okey
@@ -60,7 +61,6 @@ func (uc *UseCase) Scan(id int) models.StatusCode {
 		<!ENTITY xxe SYSTEM "file:///etc/passwd" >]>
 		<foo>&xxe;</foo>`
 	}
-
 	body := bytes.NewBufferString(request.Body)
 	urlStr := request.Scheme + "://" + request.Host + request.Path
 	req, err := http.NewRequest(request.Method, urlStr, body)
